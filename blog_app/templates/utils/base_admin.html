@@ -34,19 +34,12 @@
               </nav>
               
             <div class="flex items-center gap-4">
-              <div class="sm:flex sm:gap-4">
-                <a class="rounded-md bg-lime-600 px-5 py-2.5 text-sm font-medium text-white shadow" href="/">
-                  Login
-                </a>
-      
-                <div class="hidden sm:flex">
-                  <a
-                    class="rounded-md bg-gray-100 px-5 py-2.5 text-sm font-medium text-lime-800"
-                    href="/">
-                    Register
-                  </a>
-                </div>
-              </div>
+              <span>
+                Welcome, {{current_user.name}}
+              </span>
+              <a class="text-gray-500 transition hover:text-lime-600" href="{{url_for('auth.logout')}}" >
+                Logout
+              </a>
       
           
             </div>

@@ -4,9 +4,10 @@ endblock %} {% block content %} {% import 'macros/forms.html' as forms %}
   <form method="POST">
     <h2 class="text-2xl font-bold tracking-tight text-gray-900 mb-5">Create new user</h2>
     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
-    <div class="grid grid-cols-2 gap-4">
+    <div class="grid grid-cols-3 gap-4">
       {{forms.render_input(form.name)}} 
       {{forms.render_input(form.email)}}
+      {{forms.render_input(form.password)}}
     </div>
     <div class="mt-3">{{forms.render_input(form.submit)}}</div>
   </form>

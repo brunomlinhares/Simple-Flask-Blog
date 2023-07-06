@@ -11,22 +11,25 @@ user_bp = Blueprint(
 )
 
 from .forms import UserRegisterAdminForm
-
+from flask_login import login_required
 from blog_app.models.User import User
 from blog_app import db
 
 @user_bp.route("/",methods=["GET","POST"])
+@login_required
 def index():
     form = UserRegisterAdminForm()
     if form.validate_on_submit():
         user = User(
             name=form.name.data,
             email=form.email.data,
+            password=form.password.data,
+           
         )
         db.session.add(user)
         db.session.commit()
     users = User.query.all()
-
+  
 
 
 

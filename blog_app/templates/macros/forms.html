@@ -1,8 +1,8 @@
 {% macro render_input(field,showErrors="true") %}
 {% if field.type == "StringField" %}
 <div class="flex flex-col gap-2">
+    <label class='text-zync-800 focus-within:text-lime-600 font-bold text-sm'>{{field.label}}</label>
     <div class='flex gap-2 border border-zync-400 rounded-md px-3 py-1 justify-between items-center  transition-all focus-within:border-lime-600 '>
-        <label class='text-zync-800 focus-within:text-lime-600 font-bold text-sm'>{{field.label}}</label>
         <input name="{{field.name}}" class='w-full focus:outline-none text-black ' />
       </div>
       {% if showErrors %}
