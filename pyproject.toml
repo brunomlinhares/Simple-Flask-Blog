@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "sample-blog"
+version = "0.1.0"
+description = "Sample Blog"
+authors = ["Bruno Linhares <brunomatheuslinhares2@gmail.com>"]
+readme = "README.md"
+packages = [{include = "sample_blog"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+flask = "^2.3.2"
+flask-sqlalchemy = "^3.0.5"
+flask-login = "^0.6.2"
+psycopg2-binary = "^2.9.6"
+flask-migrate = "^4.0.4"
+wtforms = "^3.0.1"
+flask-wtf = "^1.1.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
