@@ -1,8 +1,10 @@
 {% macro render_input(field,showErrors="true") %}
+
+
 {% if field.type == "StringField" %}
 <div class="flex flex-col gap-2">
     <label class='text-zync-800 focus-within:text-lime-600 font-bold text-sm'>{{field.label}}</label>
-    <div class='flex gap-2 border border-zync-400 rounded-md px-3 py-1 justify-between items-center  transition-all focus-within:border-lime-600 '>
+    <div class='flex gap-2 border border-zync-400 rounded-md px-3 py-1.5 justify-between items-center  transition-all focus-within:border-lime-600 '>
         <input name="{{field.name}}" class='w-full focus:outline-none text-black ' />
       </div>
       {% if showErrors %}
@@ -13,7 +15,24 @@
     {% endif %}
 {% endif %}    
 </div>
-    
+
+
+{% elif field.type == "SelectField" %}
+<div>
+    <label class='text-zync-800 focus-within:text-lime-600 font-bold text-sm'>{{field.label}}</label>
+    <div lass='flex gap-2 border border-zync-400 rounded-md px-3 py-1 justify-between items-center  transition-all focus-within:border-lime-600 '>
+        <select
+        class="w-full focus:outline-none text-black px-3 py-1 mt-1.5 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:ring-lime-500 focus:border-lime-500 sm:text-sm"
+      >
+      <option value="">Select</option>
+      {% for value,label in field.choices %}
+      <option value="{{value}}">{{label}}</option>
+      {% endfor %}
+
+      </select>
+    </div>
+
+  </div>
 {% elif field.type == "SubmitField" %}
     
     <button  type="submit" class="max-w-xs max-h-12 justify-center align-center  px-5 py-2 bg-green-600 hover:bg-green-700 rounded-md text-white font-bold flex gap-3 items-center text-sm">

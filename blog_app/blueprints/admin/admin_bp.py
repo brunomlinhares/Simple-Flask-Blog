@@ -12,9 +12,10 @@ admin_bp = Blueprint(
 
 from .user.user import user_bp
 from .posts.post import post_bp
+from .category.category import category_bp
 admin_bp.register_blueprint(user_bp)
 admin_bp.register_blueprint(post_bp)
-
+admin_bp.register_blueprint(category_bp)
 @admin_bp.route("/")
 @login_required
 def index():

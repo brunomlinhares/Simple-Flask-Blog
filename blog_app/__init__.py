@@ -6,10 +6,12 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_wtf.csrf import CSRFProtect
 from flask_login import LoginManager
+
 db = SQLAlchemy()
 migrate = Migrate()
 csrf = CSRFProtect()
 login_manager = LoginManager()
+
 
 def create_app(test_config=None):
     app = Flask(__name__, instance_relative_config=True)
@@ -31,16 +33,14 @@ def create_app(test_config=None):
     csrf.init_app(app)
     login_manager.init_app(app)
 
-
     from .models.User import User
     from .models.Post import Post
+    from .models.Category import Category
 
     from .blueprints.admin.admin_bp import admin_bp
     from .blueprints.auth.auth_bp import auth_bp
-    
+
     app.register_blueprint(admin_bp)
     app.register_blueprint(auth_bp)
-
-
 
     return app
