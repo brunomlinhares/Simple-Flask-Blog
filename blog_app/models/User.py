@@ -2,6 +2,8 @@ from .. import db, login_manager
 from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
+import os
+from blog_app.config import config
 
 
 @login_manager.user_loader
@@ -28,8 +30,18 @@ class User(db.Model, UserMixin):
     def is_active(self):
         return True
 
-    def __repr__(self):
+    @property
+    def profile_image_url(self):
+        return f"https://i.pravatar.cc/300"
+    
+    def __repr__(self) -> str:
         return f"<User {self.name}>"
 
-    def check_password(self, password: str):
+    def check_password(self, password: str) -> bool:
         return check_password_hash(self.password_hash, password)
+    
+    def get_profile_image_path(self) -> str:
+        return os.path.join(self.get_folder_path(),"profile_image.webp")
+
+    def get_folder_path(self) -> str:
+        return os.path.join(config.UPLOAD_FOLDER, "users",f"{self.id}")
