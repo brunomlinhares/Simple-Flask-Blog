@@ -12,13 +12,10 @@ migrate = Migrate()
 csrf = CSRFProtect()
 login_manager = LoginManager()
 
-
+from .config import config
 def create_app(test_config=None):
     app = Flask(__name__, instance_relative_config=True)
-    app.config.from_mapping(
-        SECRET_KEY="dev",
-    )
-
+    app.config.from_object(config)
     if test_config is None:
         app.config.from_mapping(
             WFT_CSRF_TIME_LIMIT=7200,
@@ -42,5 +39,5 @@ def create_app(test_config=None):
 
     app.register_blueprint(admin_bp)
     app.register_blueprint(auth_bp)
-
+    
     return app
