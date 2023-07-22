@@ -4,7 +4,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 import os
 from blog_app.config import config
-
+from flask import url_for
 
 @login_manager.user_loader
 def load_user(user_id: int):
@@ -32,7 +32,7 @@ class User(db.Model, UserMixin):
 
     @property
     def profile_image_url(self):
-        return f"https://i.pravatar.cc/300"
+        return url_for("static", filename=f"users/{self.id}/profile_image.webp")
     
     def __repr__(self) -> str:
         return f"<User {self.name}>"
