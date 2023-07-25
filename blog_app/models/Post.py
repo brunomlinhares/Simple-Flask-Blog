@@ -1,7 +1,9 @@
-from .. import db
+from blog_app import db
+from blog_app.config import config
 from datetime import datetime
+import os
 
-
+from flask import url_for
 class Post(db.Model):
     __tablename__ = "posts"
     id = db.Column(db.Integer, primary_key=True)
@@ -17,3 +19,9 @@ class Post(db.Model):
 
     def __repr__(self):
         return f"<Post {self.title}>"
+    
+    def get_post_image_path(self):
+        return os.path.join(config.UPLOAD_FOLDER, f"post_{self.id}.png")
+    
+    def get_post_image_url(self):
+        return url_for("static", filename=self.get_post_image_path())

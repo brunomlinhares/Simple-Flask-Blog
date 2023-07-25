@@ -32,7 +32,7 @@ class User(db.Model, UserMixin):
 
     @property
     def profile_image_url(self):
-        return url_for("static", filename=f"users/{self.id}/profile_image.webp")
+        return url_for("static", filename=f"upload/users/{self.id}/profile_image.webp")
     
     def __repr__(self) -> str:
         return f"<User {self.name}>"

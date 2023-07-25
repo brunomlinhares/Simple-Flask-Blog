@@ -33,11 +33,14 @@ def create_app(test_config=None):
     from .models.User import User
     from .models.Post import Post
     from .models.Category import Category
-
+    from .models.Config import Config
     from .blueprints.admin.admin_bp import admin_bp
     from .blueprints.auth.auth_bp import auth_bp
 
     app.register_blueprint(admin_bp)
     app.register_blueprint(auth_bp)
-    
+    from .use_cases.config.create_base_config import create_default_configs
+    from .use_cases.config.create_base_config import get_all_configs
+
+
     return app

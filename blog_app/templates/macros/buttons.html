@@ -1,0 +1,42 @@
+{% macro link(url=None,text="text", type='primary',adicitional_classes="") %}
+{% if type=='primary' %}
+    {% set button_color_name = configs.main_color_name %}
+{% elif type=='secondary' %}
+    {% set button_color_name = configs.secondary_color_name %}
+{% elif  type=='danger' %}
+    {% set button_color_name = "red" %}
+{% elif  type=='success' %}
+    {% set button_color_name = "emerald" %}
+{% elif  type=='warning' %}
+    {% set button_color_name = "yellow" %}
+{% endif %}
+
+<a
+href="{{ url }}"
+class="inline-block rounded bg-{{button_color_name}}-500 px-4 py-2 text-sm font-bold text-white hover:bg-{{button_color_name}}-700 {{adicitional_classes}}"
+>
+{{ text }}
+</a>
+{% endmacro %}
+
+
+{% macro button(text="text", type='primary', button_type="button",adicitional_classes="") %}
+{% if type=='primary' %}
+    {% set button_color_name = configs.main_color_name %}
+{% elif type=='secondary' %}
+    {% set button_color_name = configs.secondary_color_name %}
+{% elif  type=='danger' %}
+    {% set button_color_name = "red" %}
+{% elif  type=='success' %}
+    {% set button_color_name = "emerald" %}
+{% elif  type=='warning' %}
+    {% set button_color_name = "yellow" %}
+{% endif %}
+
+<button
+class="inline-block rounded bg-{{button_color_name}}-500 px-4 py-2 text-small font-bold text-white hover:bg-{{button_color_name}}-700 {{adicitional_classes}}"
+type="{{button_type}}"
+>
+{{ text }}
+</button>
+{% endmacro %}

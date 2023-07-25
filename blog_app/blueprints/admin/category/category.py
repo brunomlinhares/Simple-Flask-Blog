@@ -30,7 +30,7 @@ def index():
         )
         db.session.add(category)
         db.session.commit()
- 
+  
 
     return render_template(
         "admin/category/index.html",

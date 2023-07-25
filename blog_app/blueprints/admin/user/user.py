@@ -21,7 +21,7 @@ from blog_app.use_cases.user.update_user import update_user,update_user_image
 from blog_app.use_cases.user.create_user import create_user
 from blog_app.use_cases.user.query_user import get_user_by_id
 import io
-
+from flask import url_for,redirect
 
 @user_bp.route("/",methods=["GET","POST"])
 @login_required
@@ -37,7 +37,21 @@ def index():
                 image_bytes=io.BytesIO(profile_image.read())
             )
     users = get_all_users()
-    return render_template("admin/user/index.html", form=form, users=users,page_title="User List")
+    META = {
+        "have_header":True,
+        "page_title":"User List",
+        "page_description":"User List",
+        "action": "Create new user",
+        "action_url": url_for("admin.user.index")
+
+    }
+    return render_template(
+        "admin/user/index.html", 
+        META=META,
+        page_title="User List",
+        form=form, 
+        users=users,
+        )
 
 
 @user_bp.route("/<int:user_id>/",methods=["GET","POST"])
@@ -58,9 +72,9 @@ def edit(user_id):
     return render_template("admin/user/edit.html", form=form, user=user,page_title="Edit User")
 
 
-@user_bp.route("/<int:user_id>/delete",methods=["GET","POST"])
+@user_bp.route("/<int:id>/delete",methods=["GET","POST"])
 @login_required
-def delete(user_id):
-    user = get_user_by_id(user_id)
+def delete(id):
+    user = get_user_by_id(id)
     delete_user(user)
-    return render_template("admin/user/delete.html", user=user,page_title="Delete User")
+    return redirect(url_for("admin.user.index"))
