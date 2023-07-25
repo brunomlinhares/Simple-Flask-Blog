@@ -3,8 +3,8 @@ from blog_app.models.User import User
 
 from PIL import Image
 from werkzeug.security import generate_password_hash
-
-def update_user_image(user: User, image_bytes: bytes) -> User:
+import io
+def update_user_image(user: User, image_bytes: io.BytesIO) -> User:
     image = Image.open(image_bytes)
     image.save(user.get_profile_image_path())
     return user
