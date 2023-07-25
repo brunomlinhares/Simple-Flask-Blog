@@ -8,62 +8,141 @@
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
 <body>
-    <header class="bg-white">
-        <div class="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
-          <div class="flex h-16 items-center justify-between">
-            <div class="md:flex md:items-center md:gap-12">
-              <a class="block text-teal-600" href="/">
-                
-              </a>
-            </div>
-            
-              <nav aria-label="Global">
-                <ul class="flex items-center gap-6 text-base">
-                  <li>
-                    <a class="text-gray-500 transition hover:text-lime-600" href="{{url_for('admin.user.index')}}" >
-                      Users
-                    </a>
-                  </li>
-                  <li>
-                    <a class="text-gray-500 transition hover:text-lime-600" href="{{url_for('admin.post.index')}}" >
-                      Posts
-                    </a>
-                  </li>
-                  <li>
-                    <a class="text-gray-500 transition hover:text-lime-600" href="{{url_for('admin.category.index')}}" >
-                      Category
-                    </a>
-                  </li>
-                 
-                </ul>
-              </nav>
-              
-            <div class="flex items-center gap-4">
-              <span>
-                Welcome, {{current_user.name}}
-              </span>
-              <a class="text-gray-500 transition hover:text-lime-600" href="{{url_for('auth.logout')}}" >
-                Logout
-              </a>
-      
-          
-            </div>
+  {% import 'macros/buttons.html' as buttons with context %}
+  <div class="grid grid-cols-1 gap-4 lg:grid-cols-[250px_1fr] lg:gap-8">
+    <div class="h-32 rounded-lg bg-gray-100">
+      <div class="flex h-screen flex-col justify-between border-e bg-white">
+        <div class="px-4 py-6">
+          <div
+            class="grid place-content-center rounded-lg"
+          >
+           <img src="/static/img/logo/logo.png" class="h-16">
           </div>
-        </div>
-      </header>
-    
-    <header class="bg-white shadow">
-        <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-          <h1 class="text-3xl font-bold tracking-tight text-gray-900">{{page_title}}</h1>
-        </div>
-    </header>
-    
-    <main>
-      <div class="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
-        {% block content %}
       
-        {% endblock %}
+          <ul class="mt-6 space-y-1">
+            {% for menu_item in menu %}
+              {% if menu_item.has_children %}
+            <li>
+              <details class="group [&_summary::-webkit-details-marker]:hidden">
+                <summary
+                  class="flex cursor-pointer items-center justify-between rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+                >
+                  <span class="text-sm font-medium"> {{menu_item.label}} </span>
+      
+                  <span
+                    class="shrink-0 transition duration-300 group-open:-rotate-180"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-5 w-5"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                        clip-rule="evenodd"
+                      />
+                    </svg>
+                  </span>
+                </summary>
+      
+                <ul class="mt-2 space-y-1 px-4">
+                  {% for child_item in menu_item.children %}
+                  <li>
+                    <a
+                      href="{{url_for(child_item.url)}}"
+                      class="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+                    >
+                    {{child_item.label}}
+                    </a>
+                  </li>
+                    
+                  {% endfor %}
+      
+                    
+                  </li>
+                </ul>
+              </details>
+            </li>
+            {%else%}
+            <li>
+              <a
+                href="{{url_for(menu_item.url)}}"
+                class="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+              >
+                {{menu_item.label}}
+              </a>
+            </li>
+
+              {% endif %}
+            {% endfor %}
+           
+      
+         
+          </ul>
+        </div>
+      
+        <div class="sticky inset-x-0 bottom-0 border-t border-gray-100">
+          <a href="#" class="flex items-center gap-2 bg-white p-4 hover:bg-gray-50">
+            <img
+              alt="Man"
+              src="{{current_user.profile_image_url}}"
+              class="h-10 w-10 rounded-full object-cover"
+            />
+      
+            <div>
+              <p class="text-xs">
+                <strong class="block font-medium">{{current_user.name}}</strong>
+      
+                <span class="text-xs"> {{current_user.email}} </span>
+              </p>
+            </div>
+          </a>
+        </div>
       </div>
-    </main>
+    </div>
+    <div class="h-32 rounded-lg bg-gray-100">
+
+
+<header class="bg-gray-50">
+  {% if META  and META.have_header %}
+  <div class="mx-auto max-w-screen-xl px-4 py-8 ">
+    <div class="sm:flex sm:items-center sm:justify-between">
+      <div class="text-center sm:text-left">
+        <h1 class="text-2xl font-bold text-gray-900 sm:text-3xl">
+          {{page_title}}
+        </h1>
+        
+        <p class="mt-1.5 text-sm text-gray-500">
+          Welcome Back, {{current_user.name}}!
+        </p>
+      </div>
+
+      <div class="mt-4 flex flex-col gap-4 sm:mt-0 sm:flex-row sm:items-center">
+   
+        {{ buttons.link(text=META.action, url=META.action_url,type="primary",adicitional_classes="px-3 py-2") }}
+        </a>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+</header>
+
+      {% block content %}
+
+      {% endblock %}
+
+
+
+
+
+    </div>
+  </div>
+   
+
+
+    
 </body>
 </html>
+
